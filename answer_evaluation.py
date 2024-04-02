@@ -37,7 +37,7 @@ def evaluate_answer(question, student_answer, model_answer, VectorStore):
  
 def main():
     # upload a PDF file
-    assignment = 'W24 CSE530 DSCD Assignment 2.pdf'
+    assignment = 'VivaBot - W24 CSE530 DSCD Assignment 2.pdf'
 
     sup_text=""
     if assignment.endswith('.txt'):
