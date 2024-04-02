@@ -1,0 +1,27 @@
+[
+    {
+        "question": "Question: How does gRPC play a crucial role in connecting buyers and sellers in an online shopping platform?",
+        "model_answer": "gRPC, Google's Remote Procedure Call Framework, facilitates efficient communication between buyers and sellers by enabling the seamless exchange of data and requests over the network. It ensures fast and reliable communication, essential for real-time interactions in online transactions.",
+        "student_answer": "gRPC efficiently connects buyers and sellers by optimizing communication, reducing latency, supporting load balancing, defining service contracts, enabling language flexibility, and ensuring authentication and encryption."
+    },
+    {
+        "question": "Question: How does message queuing enhance the reliability and scalability of the YouTube server's persistence mechanism?",
+        "model_answer": "Message queuing allows the YouTube server to store and process messages asynchronously, ensuring that data is not lost even if the sender or receiver is inactive. This persistence mechanism ensures that critical information related to user interactions, video uploads, and comments is securely stored and processed in a scalable manner.",
+        "student_answer": "Message queuing boosts YouTube's server reliability and scalability by decoupling components, enabling asynchronous processing, load leveling, ensuring reliability, supporting scalability, and facilitating separation of concerns."
+    },
+    {
+        "question": "Question: What role does ZeroMQ play as a TCP/IP protocol in the context of message-oriented communication?",
+        "model_answer": " ZeroMQ serves as a high-performance messaging library that facilitates the implementation of advanced communication patterns, such as publish-subscribe, in distributed systems. By leveraging ZeroMQ as a TCP/IP protocol, applications can achieve efficient and reliable message delivery over networks, ensuring seamless communication between components.",
+        "student_answer": "ZeroMQ serves as a high-performance messaging library that facilitates the implementation of advanced communication patterns, such as publish-subscribe, in distributed systems. By leveraging ZeroMQ as a TCP/IP protocol, applications can achieve efficient and reliable message delivery over networks, ensuring seamless communication between components."
+    },
+    {
+        "question": "Question: How are stubs utilized in the assignment related to building a YouTube application using RabbitMQ?",
+        "model_answer": "Stubs act as communication interfaces between different components of the YouTube application, handling the marshalling and unmarshalling of data for seamless interaction. By using stubs, developers can abstract the underlying communication details and focus on defining the interface specifications, enabling efficient communication between services.",
+        "student_answer": "Stubs are not utilized and can hinder the marshalling and unmarshalling process in building a YouTube application using RabbitMQ."
+    },
+    {
+        "question": "What is the significance of using stubs in the context of implementing an online shopping platform with gRPC?",
+        "model_answer": "Stubs play a vital role in connecting the client and server components of the online shopping platform, abstracting the communication complexities and enabling seamless interaction through defined interfaces. By utilizing stubs, developers can ensure effective communication between buyers and sellers, enhancing the overall user experience and system performance.",
+        "student_answer": "Stubs don't have a significant role in implementing an online shopping platform with gRPC. Instead, gRPC relies on Protocol Buffers, client and server libraries, channels, stubs (on the client side), services, and service implementations (on the server side) for efficient communication and service execution."
+    }
+]
