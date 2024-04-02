@@ -1,8 +1,8 @@
-import streamlit as st
+
 from dotenv import load_dotenv
 import pickle
 from PyPDF2 import PdfReader
-from streamlit_extras.add_vertical_space import add_vertical_space
+
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
@@ -68,14 +68,7 @@ def read_multiple_pdfs(pdf_paths):
 
 
     return grade
-def ask_student(question,VectorStore):
-    student_response=st.text_input(label="Enter your response:")
-    if student_response:
-        grade=evaluate(question,student_response,VectorStore)
-        student_response=None
-        return grade
-    else:
-        ask_student(question,VectorStore)
+
 def format_query(query:str):
     l=query.split(', ')
     s="\n".join(l)
@@ -104,7 +97,7 @@ def ask_question(query,VectorStore):
     
     docs = VectorStore.similarity_search(query=query, k=3)
     
-    llm = OpenAI(api_key="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")
+    llm = OpenAI(api_key="Enter The api key here")
     chain = load_qa_chain(llm=llm, chain_type="stuff")
     with get_openai_callback() as cb:
         response = chain.run(input_documents=docs, question=query)
@@ -136,7 +129,7 @@ def main():
         length_function=len
         )
     chunks = text_splitter.split_text(text=text)
-    embeddings = OpenAIEmbeddings(api_key="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")
+    embeddings = OpenAIEmbeddings(api_key="Enter the api key here")
     VectorStore = FAISS.from_texts(chunks, embedding=embeddings)
 
     
