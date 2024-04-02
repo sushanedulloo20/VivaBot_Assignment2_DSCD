@@ -1,4 +1,4 @@
 openai
 langchain
 PyPDF2
-pyhton-dotenv
+python-dotenv
