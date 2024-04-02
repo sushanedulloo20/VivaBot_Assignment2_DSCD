@@ -7,7 +7,11 @@ from langchain.llms import OpenAI
 from langchain.chains.question_answering import load_qa_chain
 from langchain.callbacks import get_openai_callback
 import json
+import os
 import sys
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def load_questions_from_json(file_path):
     with open(file_path, 'r') as file:
@@ -23,7 +27,7 @@ def evaluate_answer(question, student_answer, model_answer, VectorStore):
 
     docs = VectorStore.similarity_search(query=prompt, k=3)
     
-    llm = OpenAI(api_key='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')
+    llm = OpenAI(api_key=os.getenv('api_key'))
     chain = load_qa_chain(llm=llm, chain_type="stuff")
     with get_openai_callback() as cb:
         response = chain.run(input_documents=docs, question=prompt)
@@ -52,7 +56,7 @@ def main():
         )
     chunks = text_splitter.split_text(text=sup_text)
  
-    embeddings = OpenAIEmbeddings(api_key="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")
+    embeddings = OpenAIEmbeddings(api_key=os.getenv('api_key'))
     VectorStore = FAISS.from_texts(chunks, embedding=embeddings)
     
     #change the path to JSON file with the path to JSON file containing the answers to be evaluated
