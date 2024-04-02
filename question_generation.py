@@ -97,7 +97,7 @@ def ask_question(query,VectorStore):
     
     docs = VectorStore.similarity_search(query=query, k=3)
     
-    llm = OpenAI(api_key="Enter The api key here")
+    llm = OpenAI(api_key=os.getenv('API_KEY'))
     chain = load_qa_chain(llm=llm, chain_type="stuff")
     with get_openai_callback() as cb:
         response = chain.run(input_documents=docs, question=query)
@@ -129,7 +129,7 @@ def main():
         length_function=len
         )
     chunks = text_splitter.split_text(text=text)
-    embeddings = OpenAIEmbeddings(api_key="Enter the api key here")
+    embeddings = OpenAIEmbeddings(api_key=str(os.getenv('API_KEY')))
     VectorStore = FAISS.from_texts(chunks, embedding=embeddings)
 
     
