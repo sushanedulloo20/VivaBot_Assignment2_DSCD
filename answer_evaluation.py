@@ -27,7 +27,7 @@ def evaluate_answer(question, student_answer, model_answer, VectorStore):
 
     docs = VectorStore.similarity_search(query=prompt, k=3)
     
-    llm = OpenAI(api_key=os.getenv('api_key'))
+    llm = OpenAI(api_key=os.getenv('API_KEY'))
     chain = load_qa_chain(llm=llm, chain_type="stuff")
     with get_openai_callback() as cb:
         response = chain.run(input_documents=docs, question=prompt)
@@ -56,7 +56,7 @@ def main():
         )
     chunks = text_splitter.split_text(text=sup_text)
  
-    embeddings = OpenAIEmbeddings(api_key=os.getenv('api_key'))
+    embeddings = OpenAIEmbeddings(api_key=os.getenv('API_KEY'))
     VectorStore = FAISS.from_texts(chunks, embedding=embeddings)
     
     #change the path to JSON file with the path to JSON file containing the answers to be evaluated
