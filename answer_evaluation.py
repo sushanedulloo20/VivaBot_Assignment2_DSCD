@@ -20,8 +20,8 @@ def load_questions_from_json(file_path):
 
 def evaluate_answer(question, student_answer, model_answer, VectorStore):
     prompt = f"""You are a teaching assistant bot that has to evaluate the students answers for a conducted viva. 
-    The question asked was {question} and the model answer to this question is {model_answer}. The corresponding student answer is 
-    {student_answer}. Evaluate this student answer based on the model answer. Give relevant feedback on the student submission in 
+    The question asked was: "{question}" and the model answer to this question as given by GPT is: "{model_answer}". The corresponding student answer is: 
+    "{student_answer}". Evaluate this student answer based on the model answer. Give relevant feedback on the student submission in 
     3-5 points."""
     
 
@@ -36,18 +36,21 @@ def evaluate_answer(question, student_answer, model_answer, VectorStore):
     return response
  
 def main():
-    # upload a PDF file
-    assignment = 'VivaBot - W24 CSE530 DSCD Assignment 2.pdf'
+    # upload PDF files to be included for context
+    pdfs = {'assignment': 'VivaBot - W24 CSE530 DSCD Assignment 2.pdf', 'raft_paper': 'raft.pdf'}
 
-    sup_text=""
-    if assignment.endswith('.txt'):
-        with open(assignment, 'r') as file:
-            sup_text = file.read()
-    elif assignment.endswith('.pdf'):
-        pdf = PdfReader(assignment)
-        for page in pdf.pages:
-            sup_text += page.extract_text() + "\n"
+    sup_text = ""
 
+    for key, value in pdfs.items():
+        sup_text += f" {key} : \n" 
+        if value.endswith('.txt'):
+            with open(value, 'r') as file:
+                sup_text += file.read()
+        elif value.endswith('.pdf'):
+            pdf = PdfReader(value)
+            for page in pdf.pages:
+                sup_text += page.extract_text() + "\n"
+        sup_text += "\n\n"
 
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=1000,
