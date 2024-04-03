@@ -61,7 +61,8 @@ def main():
     
     #change the path to JSON file with the path to JSON file containing the answers to be evaluated
     data_url = sys.argv[1]
-    data_parts = data_url.rstrip('\\').split('\\')
+    data_url = data_url.replace('\\', '/')
+    data_parts = data_url.rstrip('/').split('/')
     data = data_parts[-1]
     questions_data = load_questions_from_json(os.path.join("question_files",data))
 
