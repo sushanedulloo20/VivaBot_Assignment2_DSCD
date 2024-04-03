@@ -2,6 +2,7 @@
 from dotenv import load_dotenv
 import pickle
 from PyPDF2 import PdfReader
+from datetime import datetime
 
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings.openai import OpenAIEmbeddings
@@ -111,7 +112,7 @@ load_dotenv()
 def main():
     print("Viva Questions")
     group_number=input("Enter the group number:")
-    num_questions=int(input("Enter the number of questions you wish to gererate: "))
+    num_questions=int(input("Enter the number of questions you wish to generate: "))
  
  
     # upload a PDF file
@@ -171,8 +172,11 @@ def main():
             d["question"]=new_q[i]
             d["model_answer"]=new_a[i]
             d["student_answer"]=""
+            d["TA_rating_for_question_usefulness"]=""
+            d["TA_comments_for_question_usefulness"]=""
             final_list_dictionary.append(d)
-        with open(f"students_answers_{group_number}.json", "w") as json_file:
+        timestamp = datetime.now().strftime("%m-%d_%H:%M:%S")
+        with open(f"students_answers_group_id_{group_number}_time_{timestamp}.json", "w") as json_file:
             json.dump(final_list_dictionary, json_file, indent=4)
 
 if __name__ == '__main__':

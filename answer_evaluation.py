@@ -66,6 +66,9 @@ def main():
     for i, qa in enumerate(questions_data, 1):
         evaluation = evaluate_answer(qa['question'], qa['student_answer'], qa['model_answer'], VectorStore)
         qa['evaluation'] = evaluation
+        qa['TA_rating_for_LLM_feedback'] = ""
+        qa['TA_comments_for_LLM_feedback'] = ""
+        qa['TA_score_given_to_student_answer'] = ""
 
     with open(f"evaluated_{data}", 'w') as file:
         json.dump(questions_data, file, indent=4)
