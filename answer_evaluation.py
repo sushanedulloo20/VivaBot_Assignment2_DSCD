@@ -72,6 +72,8 @@ def main():
 
     with open(f"evaluated_{data}", 'w') as file:
         json.dump(questions_data, file, indent=4)
+    
+    
             
                 
 if __name__ == '__main__':
