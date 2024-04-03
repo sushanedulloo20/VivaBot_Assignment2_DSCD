@@ -60,8 +60,10 @@ def main():
     VectorStore = FAISS.from_texts(chunks, embedding=embeddings)
     
     #change the path to JSON file with the path to JSON file containing the answers to be evaluated
-    data = sys.argv[1]
-    questions_data = load_questions_from_json(data)
+    data_url = sys.argv[1]
+    data_parts = data_url.rstrip('\\').split('\\')
+    data = data_parts[-1]
+    questions_data = load_questions_from_json(os.path.join("question_files",data))
 
     for i, qa in enumerate(questions_data, 1):
         evaluation = evaluate_answer(qa['question'], qa['student_answer'], qa['model_answer'], VectorStore)
@@ -70,8 +72,9 @@ def main():
         qa['TA_comments_for_LLM_feedback'] = ""
         qa['TA_score_given_to_student_answer'] = ""
 
-    with open(f"evaluated_{data}", 'w') as file:
-        json.dump(questions_data, file, indent=4)
+    evaluate_answer_path = os.path.join("answer_files", f"evaluated_{data}")
+    with open(evaluate_answer_path, 'w', encoding="utf-8") as file:
+        json.dump(questions_data, file, indent=4, ensure_ascii=False)
     
     
             

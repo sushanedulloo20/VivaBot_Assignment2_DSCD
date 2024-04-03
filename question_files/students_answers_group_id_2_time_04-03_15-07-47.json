@@ -1,0 +1,16 @@
+[
+    {
+        "question": " What happens if a follower crashes or runs slowly during the AppendEntries RPC process?",
+        "model_answer": " \nAnswer: According to the context, if a follower crashes or runs slowly during the AppendEntries RPC process, the leader will retry the RPC indefinitely until all followers eventually store all log entries. This ensures that the leader is able to replicate the entry on all servers, even in the face of failures or delays.",
+        "student_answer": "",
+        "TA_rating_for_question_usefulness": "",
+        "TA_comments_for_question_usefulness": ""
+    },
+    {
+        "question": "\nQ: How does Raft handle the possibility of executing a command multiple times?",
+        "model_answer": "\nA: Raft assigns unique serial numbers to each command and tracks the latest serial number processed for each client. If a command with a previously executed serial number is received, it responds immediately without re-executing the request.",
+        "student_answer": "",
+        "TA_rating_for_question_usefulness": "",
+        "TA_comments_for_question_usefulness": ""
+    }
+]

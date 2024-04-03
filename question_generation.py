@@ -175,9 +175,11 @@ def main():
             d["TA_rating_for_question_usefulness"]=""
             d["TA_comments_for_question_usefulness"]=""
             final_list_dictionary.append(d)
-        timestamp = datetime.now().strftime("%m-%d_%H:%M:%S")
-        with open(f"students_answers_group_id_{group_number}_time_{timestamp}.json", "w") as json_file:
-            json.dump(final_list_dictionary, json_file, indent=4)
+            timestamp = datetime.now().strftime("%m-%d_%H-%M-%S")
+            question_file_path = os.path.join("question_files", f"students_answers_group_id_{group_number}_time_{timestamp}.json")
+
+            with open(question_file_path, "w", encoding="utf-8") as json_file:
+                json.dump(final_list_dictionary, json_file, indent=4, ensure_ascii=False)
 
 if __name__ == '__main__':
     main()

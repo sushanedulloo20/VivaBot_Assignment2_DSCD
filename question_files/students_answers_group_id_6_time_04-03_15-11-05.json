@@ -1,0 +1,23 @@
+[
+    {
+        "question": "\nQuestion: How did the authors of the Raft algorithm ensure that their design was understandable and easy to explain for a wide audience?",
+        "model_answer": " \n\nAnswer: The authors used two techniques to evaluate and improve the understandability of their design. The first technique was problem decomposition, where they divided complex problems into smaller, more manageable pieces. The second technique was simplifying the state space by reducing the number of states and eliminating unnecessary nondeterminism.",
+        "student_answer": "",
+        "TA_rating_for_question_usefulness": "",
+        "TA_comments_for_question_usefulness": ""
+    },
+    {
+        "question": " What are the two techniques used in the user study to compare the understandability of Raft and Paxos?",
+        "model_answer": " \nAnswer: The two techniques used in the user study to compare the understandability of Raft and Paxos were problem decomposition and simplifying the state space.",
+        "student_answer": "",
+        "TA_rating_for_question_usefulness": "",
+        "TA_comments_for_question_usefulness": ""
+    },
+    {
+        "question": "\n\nQuestion: How does Raft handle the scenario where multiple followers become candidates at the same time and votes are split, resulting in no candidate obtaining a majority?",
+        "model_answer": " \nAnswer: Raft uses randomized election timeouts to ensure that split votes are rare and quickly resolved. These timeouts are chosen randomly from a fixed interval, spreading out the servers and increasing the likelihood that only a single server will time out and win the election. The winning server then sends heartbeats to prevent other servers from timing out and starting their own elections.",
+        "student_answer": "",
+        "TA_rating_for_question_usefulness": "",
+        "TA_comments_for_question_usefulness": ""
+    }
+]
