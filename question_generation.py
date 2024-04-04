@@ -124,7 +124,7 @@ def main():
     pdf_topics=["Assignment PDF"]
     # pdf_topics=["Assignment PDF","Raft Paper PDF"]
     for t in text_list:
-        text=text+f'''PDF Topic:{pdf_topics[pdf_id]}\n\n{t}\nNext Pdf\n'''
+        # text=text+f'''PDF Topic:{pdf_topics[pdf_id]}\n\n{t}\nNext Pdf\n'''
         text=text+f'''PDF Topic:{pdf_topics[pdf_id]}\n\n{t}\n'''
         pdf_id+=1
     text_splitter = RecursiveCharacterTextSplitter(
