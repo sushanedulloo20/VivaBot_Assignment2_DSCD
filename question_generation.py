@@ -116,13 +116,16 @@ def main():
  
  
     # upload a PDF file
-    pdf = ["VivaBot - W24 CSE530 DSCD Assignment 2.pdf","raft.pdf"]
+    pdf = ["VivaBot - W24 CSE530 DSCD Assignment 2.pdf"]
+    # pdf = ["VivaBot - W24 CSE530 DSCD Assignment 2.pdf","raft.pdf"]
     text_list=read_multiple_pdfs(pdf)
     text=''''''
     pdf_id=0
-    pdf_topics=["Assignment PDF","Raft Paper PDF"]
+    pdf_topics=["Assignment PDF"]
+    # pdf_topics=["Assignment PDF","Raft Paper PDF"]
     for t in text_list:
         text=text+f'''PDF Topic:{pdf_topics[pdf_id]}\n\n{t}\nNext Pdf\n'''
+        text=text+f'''PDF Topic:{pdf_topics[pdf_id]}\n\n{t}\n'''
         pdf_id+=1
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=1000,
