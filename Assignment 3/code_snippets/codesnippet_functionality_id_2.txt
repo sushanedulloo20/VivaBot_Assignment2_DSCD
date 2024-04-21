@@ -1,0 +1,23 @@
+def init_means(path, file_names):
+    coords = []
+
+    ## read all coordinates
+    for i in range(len(file_names)):
+        if file_names[i].split("/")[-1] == "config.txt" or file_names[i].split("/")[-1].lower().find("output") != -1 or file_names[i].split("/")[-1].lower().find("means") != -1:
+            continue
+        with open(os.path.join(path, file_names[i].split("/")[-1]), "r") as f:
+            for line in f:
+                if (line[-1] == '\n'):
+                    line = line[:-1]
+                coords.append([float(x) for x in line.split(",")])
+
+    ## select k random means
+    means = random.sample(coords, k)
+    means.sort()
+
+    ## save means to file
+    with open(os.path.join(path, "means.txt"), "w") as f:
+        for mean in means:
+            f.write(','.join([str(x) for x in mean]) + '\n')
+
+    return means

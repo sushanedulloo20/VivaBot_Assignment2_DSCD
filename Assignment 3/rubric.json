@@ -1,5 +1,58 @@
 [
     {
-        "question": "Check the functionality of map function implemented by the student. Mapper should send the range of indices to the mapper to read from  and mapper should read this range directly fromt the file. It should then call a function to calcualte the nearest centroid of each point and accordingly write them in the partition file. "
+        "functionality_id": "1",
+        "functionality_tag": "Parallel execution of Mapper and Reducers",
+        "question": "Check that all the mappers are executed parallelly and all the reducers are executed parallelly. The master should spawn the mappers/reducers as separate processes."
+    },
+    {
+        "functionality_id": "2",
+        "functionality_tag": "Random Centroid Initialization",
+        "question": "Check whether the centroids initialization randomly selected the set of K-centroids and not hard coded."
+    },
+    {
+        "functionality_id": "3",
+        "functionality_tag": "Mapper initialization and execution (by master)",
+        "question": "Check that the master correctly calls the mapper. Master should roughly equally split the input data and send the range of indices to the mapper. The master does not directly send the points to mappers but only the indices. Alternatively, the master may send the list of file names instead of sending the indices. The master also sends the number of reducers and list of centroids."
+    },
+    {
+        "functionality_id": "4",
+        "functionality_tag": "Convergence Criteria",
+        "question": "Check the convergence criteria implemented by the student, where the algorithm determines when to stop the K-means process. The code should determine this based on the condition that the centroids don’t change much in the current iteration or the maximum number of iterations have been executed."
+    },
+    {
+        "functionality_id": "5",
+        "functionality_tag": "Fault Tolerance",
+        "question": "Check the fault tolerance mechanism implemented by the students. Mapper/reducer may encounter an error due to which it is not able to complete the allocated task. In that case, it will return an unsuccessful or failed message to the master. The master should rerun or re-assign the failed task to the same or another mapper/reducer. Also, check for exception handling during gRPC communications."
+    },
+    {
+        "functionality_id": "6",
+        "functionality_tag": "Mapper’s Map functionality",
+        "question": "Check the functionality of the map function implemented by the student. It should receive the arguments as the range of indices that it needs to handle or, alternatively, the input files that it will handle. Mapper should read the input points directly from the file. The function should then assign each input data point to its nearest centroid and generate key-value pairs with centroid ID as key and data points as value."
+    },
+    {
+        "functionality_id": "7",
+        "functionality_tag": "Mapper’s Partition functionality",
+        "question": "Check the key-value partition function implemented by the student. The code should partition the key-value pairs, based on the key and number of reducers. Key is the centroid id in this assignment. If there are R reducers each mapper generates R partitions. The partition criteria should be deterministic, so that a particular key always gets assigned to the same partition file."
+    },
+
+    {
+        "functionality_id": "8",
+        "functionality_tag": "Reducer Communication with Mappers",
+        "question": "Check whether the reducers communicate with mappers using gRPC calls to fetch the partition of the intermediate data it needs to process. Reducer should not directly read the intermediate partition files without gRPC."
+    },
+    {
+        "functionality_id": "9",
+        "functionality_tag": "Reducer’s Data Aggregation",
+        "question": "Check whether the reducers sort the data points associated with the same centroids from all the mappers using sorting techniques."
+    },    
+    {
+        "functionality_id": "10",
+        "functionality_tag": "Centroid Calculation",
+        "question": "Check whether the reducers compute new centroids by calculating the mean of data points in each cluster or alternatively store the summed value of data points and the number of data points as tuples for each centroid id."
+    },
+    {
+        "functionality_id": "11",
+        "functionality_tag": "Master’s Centroid Updation",
+        "question": "Check that the master uses gRPC calls to contact the Reducer for reading the output files. Alternatively, Reducer can send the output file data as part of the response of the initial RPC request sent by the master. The latter scenario does not require the master to send a separate RPC for reading the output files from reducers. Once the master has the output data from the reducers, master will combine and write the new centroids to a local file for the next iteration. Alternatively, the master may just store the new centroids in memory."
     }
 ]
