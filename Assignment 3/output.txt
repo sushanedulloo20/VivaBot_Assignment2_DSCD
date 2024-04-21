@@ -1,0 +1,57 @@
+Check the functionality of map function implemented by the student. Mapper should send the range of
+indices to the mapper to read from  and mapper should read this range directly fromt the file. It
+should then call a function to calcualte the nearest centroid of each point and accordingly write
+them in the partition file.
+
+Code Evaluation:
+
+    Correctness: The code correctly creates directories for partitions and writes empty strings to
+all partition files in the mapper directory. It also reads the points from the file based on the
+given start and end indices and calculates the nearest centroid index for each point. Additionally,
+it partitions the points based on the nearest centroid index.
+
+Errors: There are no syntactical errors in the code snippet. However, there is a logical error in
+the line "for partition_id in range(1, request.no_of_partitions + 1):". This line assumes that the
+partition IDs start from 1 and increment by 1, which may not always be the case. It would be better
+to use a list or dictionary to store the partition IDs and loop through them, ensuring that all
+partitions are accounted for.
+
+Omissions: The code snippet does not include any error handling for when the partition files cannot
+be written to or when the points cannot be read from the file. It would be beneficial to include
+specific error messages and handle these exceptions accordingly.
+
+Overall Evaluation: The code snippet effectively partitions the data and calculates the nearest
+centroids for each point. However, it could be improved by implementing more robust error handling
+and considering different scenarios for partition IDs.
+
+Code Summarization and questions:
+### Code Summary:
+
+The code defines a method `Map` that is intended to handle mapping tasks in a data processing
+framework, likely a map-reduce style distributed computing environment. The main steps of the method
+include:
+
+1. Initialization of a directory specific to a mapper based on its port number.
+2. Creating or clearing files for data partitions within the mapper's directory.
+3. Loading data points from a specified range in a file and processing these points to find their
+nearest centroid from a set of centroids.
+4. Assigning each point to a partition according to its nearest centroid.
+5. Randomly determining the success of the mapping task, with a simulated failure rate. If an
+operation fails or an exception is raised, the method returns a failed response.
+
+The method uses exception handling to manage potential failures in its operations, specifically
+catching `grpc.RpcError`, `IOError`, and a general `Exception`. This robust handling ensures that,
+under any failure circumstances, an appropriate response indicating the failure is returned.
+
+### Relevant Questions:
+
+1. The `calculate_nearest_centroid_index` method is used within the `Map` function. Could you
+explain how this method might be implemented? What parameters does it take and what does it return?
+How is its result used in determining the partition for a data point?
+
+2. Consider the scenario where the `read_points_from_file` method needs to handle very large files
+that do not fit into memory. How would you modify the method to efficiently handle such large data
+sets, ensuring minimal memory usage while maintaining the functionality of reading certain ranges of
+data points from a file?
+
+

@@ -1,0 +1,5 @@
+[
+    {
+        "question": "Check the functionality of map function implemented by the student. Mapper should send the range of indices to the mapper to read from  and mapper should read this range directly fromt the file. It should then call a function to calcualte the nearest centroid of each point and accordingly write them in the partition file. "
+    }
+]
