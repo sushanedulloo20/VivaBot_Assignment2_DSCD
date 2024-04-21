@@ -120,7 +120,7 @@ def main():
         # ques=q["question"]
         functionality_id=q["functionality_id"]
         functionality_tag=q["functionality_tag"]
-        code_snippet_file_path=f"codesnippet_functionality_id_{functionality_id}.txt" 
+        code_snippet_file_path=os.path.join("code_snippets", f"codesnippet_functionality_id_{functionality_id}.txt")
         pause=input(f'''Please paste the code snippet in {code_snippet_file_path} file for
                         Functionality Id:  {functionality_id}
                         Functionality Tag:  {functionality_tag}
@@ -129,8 +129,7 @@ def main():
     for q in data:
         ques=q["question"]
         functionality_id=q["functionality_id"]
-        code_snippet_file_path=f"codesnippet_functionality_id_{functionality_id}.txt"
-
+        code_snippet_file_path=os.path.join("code_snippets", f"codesnippet_functionality_id_{functionality_id}.txt")
         with open(code_snippet_file_path,"r") as fc:
             code=fc.read()
         print(f"Evaluating code block for Functionality ID {functionality_id} \n")
