@@ -1,7 +1,0 @@
-with Pool() as pool:
-            result = pool.map_async(execute_mapper, mapper_details)
-            result.wait()
-
-with Pool() as pool:
-            result = pool.map_async(execute_reducer, reducer_details)
-            result.wait()

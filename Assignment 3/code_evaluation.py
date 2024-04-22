@@ -13,9 +13,7 @@ from dotenv import load_dotenv
 import textwrap
 from datetime import datetime
 load_dotenv()
-import warnings
 
-warnings.filterwarnings("ignore")
 
 def code_Evaluation(question,code_snippet,VectorStore):
     query_for_code_eval = f'''
