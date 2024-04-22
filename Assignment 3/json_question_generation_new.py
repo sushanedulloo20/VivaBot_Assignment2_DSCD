@@ -77,7 +77,7 @@ def main():
     num_questions = int(input("Enter the number of questions you wish to generate: "))
 
     # upload a PDF file
-    pdf = ["W24 CSE530 DSCD Assignment 3.pdf"]
+    pdf = ["W24 CSE530 DSCD Assignment 3 - For Evaluation using LLMs.pdf"]
     # pdf = ["VivaBot - W24 CSE530 DSCD Assignment 2.pdf","raft.pdf"]
     text_list = read_multiple_pdfs(pdf)
     text = ''''''
