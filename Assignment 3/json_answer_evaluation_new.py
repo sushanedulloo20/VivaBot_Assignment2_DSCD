@@ -1,5 +1,3 @@
-import textwrap
-
 from PyPDF2 import PdfReader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings.openai import OpenAIEmbeddings
@@ -10,11 +8,9 @@ from langchain.callbacks import get_openai_callback
 import json
 import os
 import sys
-import utils
 from dotenv import load_dotenv
 
 load_dotenv()
-
 
 def load_questions_from_json(file_path):
     with open(file_path, 'r') as file:
@@ -75,77 +71,21 @@ def main():
     data_url = data_url.replace('\\', '/')
     data_parts = data_url.rstrip('/').split('/')
     data = data_parts[-1]
-    # questions_data = load_questions_from_json(os.path.join("viva_question_files",data))
-    questions_data = utils.read_text_into_dict(os.path.join("viva_question_files", data))
+    questions_data = load_questions_from_json(os.path.join("viva_question_files",data))
 
     for i, qa in enumerate(questions_data, 1):
         evaluation = evaluate_answer(qa['question'], qa['student_answer'], qa['model_answer'], VectorStore)
         qa['evaluation'] = evaluation
-        qa['TA_rating_for_LLM_feedback'] = "0"
-        qa['TA_comments_for_LLM_feedback'] = "NA"
-        qa['TA_score_given_to_student_answer'] = "-1"
+        qa['TA_rating_for_LLM_feedback'] = ""
+        qa['TA_comments_for_LLM_feedback'] = ""
+        qa['TA_score_given_to_student_answer'] = ""
 
     evaluate_answer_path = os.path.join("viva_answer_files", f"evaluated_{data}")
-    # with open(evaluate_answer_path, 'w', encoding="utf-8") as file:
-    #     json.dump(questions_data, file, indent=4, ensure_ascii=False)
-
-    with open(evaluate_answer_path, "w", encoding="utf-8") as txt_file:
-        for i, block in enumerate(questions_data, start=1):
-            # txt_file.write(f"""Question: {textwrap.indent(textwrap.dedent(d['question']))}\n""")
-            wrapper = textwrap.TextWrapper(width=100)
-
-            txt_file.write("""******************************************************************\n\n""")
-            txt_file.write(f"""**Question**\n""")
-            lines = textwrap.dedent(block['question'].strip()).split("\n")
-            for line in lines:
-                txt_file.write(wrapper.fill(line) + "\n")
-            txt_file.write("\n")
-
-            txt_file.write(f"""**Model Answer**\n""")
-            lines = textwrap.dedent(block['model_answer'].strip()).split("\n")
-            for line in lines:
-                txt_file.write(wrapper.fill(line) + "\n")
-            txt_file.write("\n")
-
-            txt_file.write("""**Student Answer**\n\n""")
-            lines = textwrap.dedent(block['student_answer'].strip()).split("\n")
-            for line in lines:
-                txt_file.write(wrapper.fill(line) + "\n")
-            txt_file.write("\n")
-
-            txt_file.write("""**TA Rating for Question Usefulness (1 being very poor, 5 being excellent)**\n\n""")
-            lines = textwrap.dedent(block['rating'].strip()).split("\n")
-            for line in lines:
-                txt_file.write(wrapper.fill(line) + "\n")
-            txt_file.write("\n")
-
-            txt_file.write("""**TA Comments for Question Usefulness**\n\n""")
-            lines = textwrap.dedent(block['comments'].strip()).split("\n")
-            for line in lines:
-                txt_file.write(wrapper.fill(line) + "\n")
-            txt_file.write("\n")
-
-            txt_file.write("""**TA Rating for LLM Feedback**\n\n""")
-            lines = textwrap.dedent(block['TA_rating_for_LLM_feedback'].strip()).split("\n")
-            for line in lines:
-                txt_file.write(wrapper.fill(line) + "\n")
-            txt_file.write("\n")
-
-            txt_file.write("""**TA Comments for LLM Feedback**\n\n""")
-            lines = textwrap.dedent(block['TA_comments_for_LLM_feedback'].strip()).split("\n")
-            for line in lines:
-                txt_file.write(wrapper.fill(line) + "\n")
-            txt_file.write("\n")
-
-            txt_file.write("""**TA Score for Student Answer**\n\n""")
-            lines = textwrap.dedent(block['TA_score_given_to_student_answer'].strip()).split("\n")
-            for line in lines:
-                txt_file.write(wrapper.fill(line) + "\n")
-            txt_file.write("\n")
-
-            txt_file.write("""**End of TA Score**\n""")
-            txt_file.write("""******************************************************************\n\n""")
-
-
+    with open(evaluate_answer_path, 'w', encoding="utf-8") as file:
+        json.dump(questions_data, file, indent=4, ensure_ascii=False)
+    
+    
+            
+                
 if __name__ == '__main__':
     main()

@@ -70,7 +70,6 @@ def prompt_llm(query, VectorStore):
 
 load_dotenv()
 
-import textwrap
 
 def main():
     print("Viva Questions")
@@ -141,13 +140,11 @@ def main():
             final_list_dictionary.append(d)
             timestamp = datetime.now().strftime("%m-%d_%H-%M-%S")
             question_file_path = os.path.join("viva_question_files",
-                                              f"students_answers_group_id_{group_number}_time_{timestamp}.txt")
+                                              f"students_answers_group_id_{group_number}_time_{timestamp}.json")
 
-            with open(question_file_path, "w", encoding="utf-8") as txt_file:
-                for d in final_list_dictionary:
-                    txt_file.write(f"""Question: {textwrap.indent(textwrap.dedent(d['question']), prefix=' ' * 4)}\n""")
-                    txt_file.write(f"""Model Answer: {textwrap.indent(textwrap.dedent(d['model_answer']), prefix=' ' * 4)}\n""")
-                    txt_file.write("""Student Answer: \n ******************************************************************\n""")
+            with open(question_file_path, "w", encoding="utf-8") as json_file:
+                json.dump(final_list_dictionary, json_file, indent=4, ensure_ascii=False)
+
 
 if __name__ == '__main__':
     main()

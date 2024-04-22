@@ -70,6 +70,7 @@ def prompt_llm(query, VectorStore):
 
 load_dotenv()
 
+import textwrap
 
 def main():
     print("Viva Questions")
@@ -111,7 +112,7 @@ def main():
         for i in range(num_questions):
             if topic_index >= len(topics_choosen):
                 topic_index = 0
-            prompt_to_llm = f'''You are a teaching assistant for distributed systems class. You need to take viva of a student in which the student will be asked a question and they will be given 3 minutes to write the answer for this question. Please generate a question strictly from the topic given below:
+            prompt_to_llm = f'''You are a teaching assistant for distributed systems class. You need to take viva of a student in which the student will be asked a question and they will be given 3 minutes to write the answer for this question. Please generate a question strictly related to the topic given below:
                 TOPIC:
                 {topics_choosen[topic_index]}
                 .Do NOT REPEAT THE PREVIOUSLY ASKED QUESTIONS'''
@@ -140,11 +141,35 @@ def main():
             final_list_dictionary.append(d)
             timestamp = datetime.now().strftime("%m-%d_%H-%M-%S")
             question_file_path = os.path.join("viva_question_files",
-                                              f"students_answers_group_id_{group_number}_time_{timestamp}.json")
+                                              f"students_answers_group_id_{group_number}_time_{timestamp}.txt")
+            # with open(question_file_path, "w", encoding="utf-8") as json_file:
+            #     json.dump(final_list_dictionary, json_file, indent=4, ensure_ascii=False)
 
-            with open(question_file_path, "w", encoding="utf-8") as json_file:
-                json.dump(final_list_dictionary, json_file, indent=4, ensure_ascii=False)
+            with open(question_file_path, "w", encoding="utf-8") as txt_file:
+                for d in final_list_dictionary:
+                    # txt_file.write(f"""Question: {textwrap.indent(textwrap.dedent(d['question']))}\n""")
+                    wrapper = textwrap.TextWrapper(width=100)
 
+                    txt_file.write("""******************************************************************\n\n""")
+                    txt_file.write(f"""**Question**\n""")
+                    lines = textwrap.dedent(d['question'].strip()).split("\n")
+                    for line in lines:
+                        txt_file.write(wrapper.fill(line) + "\n")
+                    txt_file.write("\n")
+
+                    txt_file.write(f"""**Model Answer**\n""")
+                    lines = textwrap.dedent(d['model_answer'].strip()).split("\n")
+                    for line in lines:
+                        txt_file.write(wrapper.fill(line) + "\n")
+                    txt_file.write("\n")
+
+                    txt_file.write("""**Student Answer**\n\n""")
+                    txt_file.write("""**TA Rating for Question Usefulness (1 being very poor, 5 being excellent)**\n\n0\n\n""")
+
+                    txt_file.write("""**TA Comments for Question Usefulness**\n\n""")
+                    txt_file.write("""NA\n\n""")
+                    txt_file.write("""**End of TA Comments**\n""")
+                    txt_file.write("""******************************************************************\n\n""")
 
 if __name__ == '__main__':
     main()
