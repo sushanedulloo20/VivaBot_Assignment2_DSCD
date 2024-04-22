@@ -11,7 +11,7 @@
     },
     {
         "functionality_id": "3",
-        "functionality_tag": "Mapper initialization and execution (by master)",
+        "functionality_tag": "Input Split, Mapper initialization and execution (by master)",
         "question": "Check that the master correctly calls the mapper. Master should roughly equally split the input data and send the range of indices to the mapper. The master does not directly send the points to mappers but only the indices. Alternatively, the master may send the list of file names instead of sending the indices. The master also sends the number of reducers and list of centroids."
     },
     {

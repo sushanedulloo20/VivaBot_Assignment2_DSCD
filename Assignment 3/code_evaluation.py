@@ -1,10 +1,10 @@
 from PyPDF2 import PdfReader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.vectorstores import FAISS
-from langchain.llms import OpenAI
+from langchain_openai import OpenAIEmbeddings, OpenAI
+from langchain_community.vectorstores import FAISS
+# from langchain_community.llms import OpenAI
 from langchain.chains.question_answering import load_qa_chain
-from langchain.callbacks import get_openai_callback
+from langchain_community.callbacks import get_openai_callback
 import json
 import os
 import sys
@@ -63,7 +63,20 @@ def code_summarization(code_snippet):
 def write_to_file(question, evaluation_response, summarization_response, output_file_path):
     with open(output_file_path, "a") as output_file:
         wrapper = textwrap.TextWrapper(width=100)
-        lines = question.split("\n")
+        separator = '*********************************************************************************'
+        intro_text = textwrap.dedent(f'''
+        *********************************************************************************
+        *********************************************************************************
+        Functionality Id = {question['functionality_id']}\n
+        Functionality Tag = {question['functionality_tag']}\n
+        ''')
+        output_file.write(intro_text)
+        # output_file.write(wrapper.fill(separator) + "\n")
+        # output_file.write(wrapper.fill(separator) + "\n")
+        # output_file.write(wrapper.fill(f'Functionality Id = {question["functionality_id"]}') + "\n")
+        # output_file.write(wrapper.fill(f'Functionality Tag = {question["functionality_tag"]}') + "\n")
+
+        lines = question['question'].split("\n")
         for line in lines:
             output_file.write(wrapper.fill(line) + "\n")
         output_file.write("\n")
@@ -76,9 +89,30 @@ def write_to_file(question, evaluation_response, summarization_response, output_
         lines = summarization_response.split("\n")
         for line in lines:
             output_file.write(wrapper.fill(line) + "\n")
-        output_file.write("\n\n")
-        output_file.write("----------------------------------------------------------------\n")
-        output_file.write("----------------------------------------------------------------\n")
+        end_text = textwrap.dedent(f'''
+        *********************************************************************************
+        *********************************************************************************
+        ''')
+        output_file.write(end_text)
+        # output_file.write("\n\n")
+        # output_file.write("--------------------------------------------------------------------------------------\n")
+        # output_file.write("--------------------------------------------------------------------------------------\n")
+
+
+def generate_ta_feedback_file(data, group_number, timestamp):
+    ta_feedback_file_path = os.path.join("ta_eval_feedback", f"ta_feedback_code_evaluation_group_id_{group_number}_time_{timestamp}.txt")
+    with open(ta_feedback_file_path, "a") as ta_feedback_file:
+        for question in data:
+            text = textwrap.dedent(f'''
+            *********************************************************************************
+            Functionality Id = {question['functionality_id']}
+            Functionality Tag = {question['functionality_tag']}
+            TA Rating for Code Evaluation (1 being very poor, 5 being excellent) =
+            TA Rating for Code Summary (1 being very poor, 5 being excellent) =
+            TA Rating for Generated Q-A pairs based on Code (1 being very poor, 5 being excellent) =
+            *********************************************************************************
+            ''')
+            ta_feedback_file.write(text)
 
 def main():
     group_number=input("Enter the group number:")
@@ -112,10 +146,8 @@ def main():
     VectorStore = FAISS.from_texts(chunks, embedding=embeddings)
 
     timestamp = datetime.now().strftime("%m-%d_%H-%M-%S")
-    output_file_path = os.path.join("output_files", f"output_code_evaluation_group_id_{group_number}_time_{timestamp}.txt")
-    # output_file = open(output_file_path, "a")
+    output_file_path = os.path.join("output_files", f"output_code_evaluation_group_id_{group_number}_time_{timestamp}.md")
     for q in data:
-        # ques=q["question"]
         functionality_id=q["functionality_id"]
         functionality_tag=q["functionality_tag"]
         code_snippet_file_path=os.path.join("code_snippets", f"codesnippet_functionality_id_{functionality_id}.txt")
@@ -124,6 +156,7 @@ def main():
                         Functionality Tag:  {functionality_tag}
                         After that press [Enter] to continue...''')
         
+    generate_ta_feedback_file(data, group_number, timestamp)
     for q in data:
         ques=q["question"]
         functionality_id=q["functionality_id"]
@@ -134,7 +167,7 @@ def main():
         evaluation_response = code_Evaluation(ques, code, VectorStore)
         summarization_response = code_summarization(code)
 
-        write_to_file(ques, evaluation_response, summarization_response, output_file_path)
+        write_to_file(q, evaluation_response, summarization_response, output_file_path)
         print(f"Evaluation finished for code block for Functionality ID {functionality_id} \n")
 
 if __name__ == "__main__":
