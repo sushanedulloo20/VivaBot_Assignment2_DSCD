@@ -146,7 +146,7 @@ def main():
     VectorStore = FAISS.from_texts(chunks, embedding=embeddings)
 
     timestamp = datetime.now().strftime("%m-%d_%H-%M-%S")
-    output_file_path = os.path.join("output_files", f"output_code_evaluation_group_id_{group_number}_time_{timestamp}.md")
+    output_file_path = os.path.join("output_files", f"output_code_evaluation_group_id_{group_number}_time_{timestamp}.txt")
     for q in data:
         functionality_id=q["functionality_id"]
         functionality_tag=q["functionality_tag"]
