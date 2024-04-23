@@ -113,6 +113,12 @@ def main():
                 txt_file.write(wrapper.fill(line) + "\n")
             txt_file.write("\n")
 
+            txt_file.write("""**Answer Evaluation By LLM**\n\n""")
+            lines = textwrap.dedent(block['evaluation'].strip()).split("\n")
+            for line in lines:
+                txt_file.write(wrapper.fill(line) + "\n")
+            txt_file.write("\n")
+
             txt_file.write("""**TA Rating for Question Usefulness (1 being very poor, 5 being excellent)**\n\n""")
             lines = textwrap.dedent(block['rating'].strip()).split("\n")
             for line in lines:
