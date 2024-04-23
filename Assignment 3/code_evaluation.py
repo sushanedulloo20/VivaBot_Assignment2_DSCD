@@ -1,3 +1,5 @@
+import shutil
+
 from PyPDF2 import PdfReader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings, OpenAI
@@ -114,6 +116,16 @@ def generate_ta_feedback_file(data, group_number, timestamp):
             ''')
             ta_feedback_file.write(text)
 
+def copy_student_code_for_archival(student_code_snippets_dir, group_number, timestamp):
+    destination_dir = os.path.join("code_snipppets_prev_students", f"code_snippet_group_id_{group_number}_time_{timestamp}")
+    os.makedirs(destination_dir, exist_ok=True)
+    student_code_snippet_files = os.listdir(student_code_snippets_dir)
+    for file in student_code_snippet_files:
+        source_file_path = os.path.join(student_code_snippets_dir, file)
+        destination_file_path = os.path.join(destination_dir, file)
+        shutil.copy(source_file_path, destination_file_path)
+    print("Copied files in", student_code_snippets_dir, "to", destination_dir)
+
 def main():
     group_number=input("Enter the group number:")
     rubric = 'rubric.json'
@@ -147,20 +159,23 @@ def main():
 
     timestamp = datetime.now().strftime("%m-%d_%H-%M-%S")
     output_file_path = os.path.join("code_evaluation_by_llm", f"output_code_evaluation_group_id_{group_number}_time_{timestamp}.txt")
+    student_code_snippets_dir = "student_code_snippets"
     for q in data:
         functionality_id=q["functionality_id"]
         functionality_tag=q["functionality_tag"]
-        code_snippet_file_path=os.path.join("student_code_snippets", f"codesnippet_functionality_id_{functionality_id}.txt")
+        code_snippet_file_path=os.path.join(student_code_snippets_dir, f"codesnippet_functionality_id_{functionality_id}.txt")
         pause=input(f'''Please paste the code snippet in {code_snippet_file_path} file for
                         Functionality Id:  {functionality_id}
                         Functionality Tag:  {functionality_tag}
                         After that press [Enter] to continue...''')
-        
+
+    copy_student_code_for_archival(student_code_snippets_dir, group_number, timestamp)
     generate_ta_feedback_file(data, group_number, timestamp)
+
     for q in data:
         ques=q["question"]
         functionality_id=q["functionality_id"]
-        code_snippet_file_path=os.path.join("student_code_snippets", f"codesnippet_functionality_id_{functionality_id}.txt")
+        code_snippet_file_path=os.path.join(student_code_snippets_dir, f"codesnippet_functionality_id_{functionality_id}.txt")
         with open(code_snippet_file_path,"r") as fc:
             code=fc.read()
         print(f"Evaluating code block for Functionality ID {functionality_id} \n")
