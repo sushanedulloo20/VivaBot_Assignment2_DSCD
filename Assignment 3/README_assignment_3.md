@@ -13,12 +13,16 @@
 3. Run `python3 code_evaluation.py`.
 4. It will ask you for the group number. Enter the group for which you are taking viva at present.
 5. Before moving forward, please take a look at the code evaluation section in the rubric which has been shared with you: https://docs.google.com/document/d/1VX1LURDEWAGRI71v_W1-9MvBPEPANnq6GSL23r9YvBA/edit#bookmark=id.7ixy2s4zzoji  
-6. The code evaluation portion in the rubric asks you to check for 11 functionalities in the student code. Each functionality has been given a `functionality_id`. `functionality_id` goes from 1 to 11. 
-7. Our code evaluation script will ask you to paste the code snippet (written by students) for each functionality, separately in its specific code snippet file. For example, code snippet for `functionality_id = 1` will go into the file: `code_snippets/codesnippet_functionality_id_1.txt`. So, you will need to download the student code from the google classroom, share your screen, ask the student for the specific code snippet in their code for each functionality and paste it in its respective file.
-8. You need to do the above for all the functionalities. Once you have done so, the script will start evaluating one functionality at a time. You will be able to see on the screen how many functionalities have been evaluated by the script.
-9. You can start going through the evaluation results - immediately after the evaluation is complete for one functionality. You don't need to wait for the evaluation to finish for other functionalities. 
-9. The code evaluation results will be saved in a single file under the `output_files` directory. The evaluation will have the following items for each functionality: Code Evaluation (correctness, errors, omissions, overall evaluation), Code summary, Few Questions based on the code (along with their answers). You can use the generated questions to test the student if you wish.
-10. The output files are generated with group ids and timestamps. So, you don't need to overwrite or delete any files. You will be required to upload all such output files later on. Hence, please do not delete any files.  
+6. The code evaluation portion in the rubric asks you to check for 11 functionalities in the student code. Each functionality has been given a `functionality_id`. `functionality_id` goes from `1 to 11`. 
+7. Our code evaluation script will ask you to paste the code snippet (written by students) for each functionality, separately in its specific code snippet file. For example, code snippet for `functionality_id = 1` will go into the file: `student_code_snippets/codesnippet_functionality_id_1.txt`. So, you will need to download the student code from the google classroom, share your screen, ask the student for the specific code snippet in their code for each functionality and paste it in its respective file.
+8. You need to do the above for all the functionalities (i.e. copy and paste the code snippet for each of the 11 functionalities). Once you have done so, the script will start evaluating one functionality at a time. You will be able to see on the screen (terminal output) how many functionalities have been evaluated by the script.
+9. You can start going through the evaluation results - immediately after the evaluation is complete for the first functionality. You don't need to wait for the evaluation to finish for other functionalities. 
+9. The code evaluation results will be saved in a single file under the `code_evaluation_by_llm` directory. The evaluation will have the following items for each functionality:
+   1. Code Evaluation (correctness, errors, omissions, overall evaluation)
+   2. Code summary
+   3. Few Questions based on the code (along with their answers). You can use the generated questions to test the student if you wish. 
+10. Once you are done with a group's evaluation, please add ratings for LLM's code evaluation in the corresponding group file in `ta_code_evaluation_feedback` directory.
+11. All the files are generated with group ids and timestamps. So, you don't need to overwrite or delete any files. You will be required to upload all the generated files later on. Hence, please do not delete any files.
 
 # Question Generation
 1. Go to Assignment 3 directory: `cd Assignment\ 3` (Command may vary on windows like OS)
@@ -30,12 +34,19 @@
 
 # Answer evaluation
 1. Once the students have answered the questions, you need to get the answers evaluated using LLMs.
-2. For this, you need to populate the json file (already generated in the question generation phase) with student answers.
-3. For any group, if you have generated the questions more than once, then combine all the questions into a single json file. In this combined json file, some questions will not have student answers as they were not used for student evaluation. That is alright! The answer evaluation script will ignore such questions.
-4. Then you need to run `python3 answer_evaluation_new.py <json_file_with_student_answers>`. You don't need to give the full file path for json. Just write the json file name. This will generate qualitative feedback for each answer of students. You can use this feedback to give marks to the student.
-5. Once done with a group, rate each question and each feedback generated by LLM. Also, give comments wherever necessary.
-6. In case you use your own questions (when LLM is not giving any useful questions), please add those questions also in this json file, in the same format and also add a comment saying that this is your own question and answer.
+2. For this, you need to populate the text file (already generated in the question generation phase) with student answers.
+3. Then you need to run `python3 answer_evaluation_new.py <text_file_with_student_answers>`. This will generate qualitative feedback for each answer of students. You can use this feedback to give marks to the student.
+4. Once done with a group, rate each question and each feedback generated by LLM. Also, give comments wherever necessary.
+5. In case you use your own questions (when LLM is not giving any useful questions), please add those questions also in the text file, in the same format and also add a comment saying that this is your own question and answer.
 
 # Very important: Please do not delete any files as all the files are required to be shared with the instructor and research team for further analysis.
 
+# Most Important:
 Once you are done with all the groups, please fill out the google form whose link will be there present in the rubric document.
+
+When uploading, please zip and upload the following directories:
+1. `code_evaluation_by_llm`
+2. `code_snippets_prev_students`
+3. `ta_code_evaluation_feedback`
+4. `viva_answer_files`
+5. `viva_question_files`

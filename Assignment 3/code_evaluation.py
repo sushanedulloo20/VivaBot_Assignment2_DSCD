@@ -117,7 +117,7 @@ def generate_ta_feedback_file(data, group_number, timestamp):
             ta_feedback_file.write(text)
 
 def copy_student_code_for_archival(student_code_snippets_dir, group_number, timestamp):
-    destination_dir = os.path.join("code_snipppets_prev_students", f"code_snippet_group_id_{group_number}_time_{timestamp}")
+    destination_dir = os.path.join("code_snippets_prev_students", f"code_snippet_group_id_{group_number}_time_{timestamp}")
     os.makedirs(destination_dir, exist_ok=True)
     student_code_snippet_files = os.listdir(student_code_snippets_dir)
     for file in student_code_snippet_files:
