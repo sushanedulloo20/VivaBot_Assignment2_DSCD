@@ -100,7 +100,7 @@ def write_to_file(question, evaluation_response, summarization_response, output_
 
 
 def generate_ta_feedback_file(data, group_number, timestamp):
-    ta_feedback_file_path = os.path.join("ta_eval_feedback", f"ta_feedback_code_evaluation_group_id_{group_number}_time_{timestamp}.txt")
+    ta_feedback_file_path = os.path.join("ta_code_evaluation_feedback", f"ta_feedback_code_evaluation_group_id_{group_number}_time_{timestamp}.txt")
     with open(ta_feedback_file_path, "a") as ta_feedback_file:
         for question in data:
             text = textwrap.dedent(f'''
@@ -146,11 +146,11 @@ def main():
     VectorStore = FAISS.from_texts(chunks, embedding=embeddings)
 
     timestamp = datetime.now().strftime("%m-%d_%H-%M-%S")
-    output_file_path = os.path.join("output_files", f"output_code_evaluation_group_id_{group_number}_time_{timestamp}.txt")
+    output_file_path = os.path.join("code_evaluation_by_llm", f"output_code_evaluation_group_id_{group_number}_time_{timestamp}.txt")
     for q in data:
         functionality_id=q["functionality_id"]
         functionality_tag=q["functionality_tag"]
-        code_snippet_file_path=os.path.join("code_snippets", f"codesnippet_functionality_id_{functionality_id}.txt")
+        code_snippet_file_path=os.path.join("student_code_snippets", f"codesnippet_functionality_id_{functionality_id}.txt")
         pause=input(f'''Please paste the code snippet in {code_snippet_file_path} file for
                         Functionality Id:  {functionality_id}
                         Functionality Tag:  {functionality_tag}
@@ -160,7 +160,7 @@ def main():
     for q in data:
         ques=q["question"]
         functionality_id=q["functionality_id"]
-        code_snippet_file_path=os.path.join("code_snippets", f"codesnippet_functionality_id_{functionality_id}.txt")
+        code_snippet_file_path=os.path.join("student_code_snippets", f"codesnippet_functionality_id_{functionality_id}.txt")
         with open(code_snippet_file_path,"r") as fc:
             code=fc.read()
         print(f"Evaluating code block for Functionality ID {functionality_id} \n")
