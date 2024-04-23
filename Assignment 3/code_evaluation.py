@@ -109,9 +109,9 @@ def generate_ta_feedback_file(data, group_number, timestamp):
             *********************************************************************************
             Functionality Id = {question['functionality_id']}
             Functionality Tag = {question['functionality_tag']}
-            TA Rating for Code Evaluation (1 being very poor, 5 being excellent) =
-            TA Rating for Code Summary (1 being very poor, 5 being excellent) =
-            TA Rating for Generated Q-A pairs based on Code (1 being very poor, 5 being excellent) =
+            TA Rating for Code Evaluation (1 being very poor, 5 being excellent) = NA
+            TA Rating for Code Summary (1 being very poor, 5 being excellent) = NA
+            TA Rating for Generated Q-A pairs based on Code (1 being very poor, 5 being excellent) = NA
             *********************************************************************************
             ''')
             ta_feedback_file.write(text)

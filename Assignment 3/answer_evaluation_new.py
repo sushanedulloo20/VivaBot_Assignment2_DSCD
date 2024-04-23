@@ -81,9 +81,9 @@ def main():
     for i, qa in enumerate(questions_data, 1):
         evaluation = evaluate_answer(qa['question'], qa['student_answer'], qa['model_answer'], VectorStore)
         qa['evaluation'] = evaluation
-        qa['TA_rating_for_LLM_feedback'] = "0"
+        qa['TA_rating_for_LLM_feedback'] = "NA"
         qa['TA_comments_for_LLM_feedback'] = "NA"
-        qa['TA_score_given_to_student_answer'] = "-1"
+        qa['TA_score_given_to_student_answer'] = "NA"
 
     evaluate_answer_path = os.path.join("viva_answer_files", f"evaluated_{data}")
     # with open(evaluate_answer_path, 'w', encoding="utf-8") as file:
@@ -131,7 +131,7 @@ def main():
                 txt_file.write(wrapper.fill(line) + "\n")
             txt_file.write("\n")
 
-            txt_file.write("""**TA Rating for LLM Feedback**\n\n""")
+            txt_file.write("""**TA Rating for LLM Feedback (1 being very poor, 5 being excellent)**\n\n""")
             lines = textwrap.dedent(block['TA_rating_for_LLM_feedback'].strip()).split("\n")
             for line in lines:
                 txt_file.write(wrapper.fill(line) + "\n")

@@ -134,9 +134,9 @@ def main():
             d = {
                 "question": questions[i],
                 "model_answer": answers[i],
-                "student_answer": "",
-                "TA_rating_for_question_usefulness": "",
-                "TA_comments_for_question_usefulness": ""
+                "student_answer": "NA",
+                "TA_rating_for_question_usefulness": "NA",
+                "TA_comments_for_question_usefulness": "NA"
             }
             final_list_dictionary.append(d)
             timestamp = datetime.now().strftime("%m-%d_%H-%M-%S")
@@ -163,8 +163,8 @@ def main():
                         txt_file.write(wrapper.fill(line) + "\n")
                     txt_file.write("\n")
 
-                    txt_file.write("""**Student Answer**\n\n""")
-                    txt_file.write("""**TA Rating for Question Usefulness (1 being very poor, 5 being excellent)**\n\n0\n\n""")
+                    txt_file.write("""**Student Answer**\n\nNA\n\n""")
+                    txt_file.write("""**TA Rating for Question Usefulness (1 being very poor, 5 being excellent)**\n\nNA\n\n""")
 
                     txt_file.write("""**TA Comments for Question Usefulness**\n\n""")
                     txt_file.write("""NA\n\n""")
