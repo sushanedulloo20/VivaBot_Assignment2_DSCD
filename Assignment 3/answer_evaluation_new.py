@@ -76,7 +76,7 @@ def main():
     data_parts = data_url.rstrip('/').split('/')
     data = data_parts[-1]
     # questions_data = load_questions_from_json(os.path.join("viva_question_files",data))
-    questions_data = utils.read_text_into_dict(os.path.join("viva_question_files", data))
+    questions_data = utils.read_questions_file_into_dict(os.path.join("viva_question_files", data))
 
     for i, qa in enumerate(questions_data, 1):
         evaluation = evaluate_answer(qa['question'], qa['student_answer'], qa['model_answer'], VectorStore)

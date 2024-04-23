@@ -28,7 +28,7 @@ def extract_fields(text):
 
 
 # Function to read the file and extract fields for each block
-def read_text_into_dict(file_path):
+def read_questions_file_into_dict(file_path):
     with open(file_path, 'r') as file:
         text = file.read()
 
